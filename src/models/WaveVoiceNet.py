@@ -9,7 +9,7 @@ import torch
 
 class DownsampleBlock(torch.nn.Module):
     def __init__(self, in_kernels, out_kernels, kernel_size, stride, padding):
-        super(DownsampleBlock, self).__init__()
+        super().__init__()
         # self.pool = torch.nn.MaxPool2d(2, 2)
         self.conv2d = torch.nn.Conv2d(in_kernels, out_kernels, kernel_size, stride=stride, padding=padding)
         self.bn2d = torch.nn.InstanceNorm2d(out_kernels)
@@ -42,7 +42,7 @@ class ResidualBlock(torch.nn.Module):
         
 class UpsampleBlock(torch.nn.Module):
     def __init__(self, in_kernels, out_kernels, kernel_size, stride, output_padding=0):
-        super(UpsampleBlock, self).__init__()
+        super().__init__()
 
         self.deconv2d = torch.nn.ConvTranspose2d(in_kernels, out_kernels, kernel_size, stride=stride,padding=0, output_padding=output_padding)
         self.bn2d = torch.nn.InstanceNorm2d(out_kernels)
@@ -72,7 +72,7 @@ class WaveVoiceNet(BaseModel):
         verbose=False):
 
         
-        super(WaveVoiceNet, self).__init__()
+        super().__init__()
         self.register_buffer("window", torch.hamming_window(window_length))
         self.loss_function = torch.nn.MSELoss()
         self.learning_rate = learning_rate
@@ -248,9 +248,6 @@ def main():
 
     model = WaveVoiceNet(verbose=True)
     batch_size = 32
-    # sample = torch.zeros(batch_size, 1, 256, 256)
-    # output = model.forward_in_stft(sample)
-    # assert output.shape == sample.shape
 
     sample = torch.zeros(batch_size, 8000 * 10) 
     output = model.forward(sample)

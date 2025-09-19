@@ -6,7 +6,7 @@ Please contact us @ rase-challenge@ntu.edu.sg at anytime if you face any issues 
 Download the baseline and training code from this repo. 
 
 ```
-git clone RASE-challenge/challenge_baseline2026
+git clone https://github.com/RASE-Challenge/challenge_baseline2026.git
 ```
 
 and link dataset from your email after you have registered.
@@ -15,7 +15,7 @@ and link dataset from your email after you have registered.
 After downloading, unzip the dataset.zip into the repo, and check that the file directory is as such:
 ```text
 challenge_baseline2026/
-├── dataset/ # unzip the downloaded dataset and copy into this directory
+├── dataset/ # unzip the downloaded dataset and copy here
 │   ├── Task1/
 │   └── Task2/
 ├── results/
@@ -31,8 +31,6 @@ challenge_baseline2026/
 ├── baseline_docker_build.sh
 ├── baseline_docker_run.sh
 ├── baseline.dockerfile
-├── docker_submission.sh
-├── full_submission.sh
 ├── config.sh
 └── README.md
 ```
@@ -79,13 +77,13 @@ The rationale for the fast dev run phase is to facilitate quick fails (i.e., cod
 
 
 ## 6. Innovate your new model!
-The code base is prepared to allow easy extension. To make your new model, copy the baseline model and configuration made in the following folders/files:
+The code base is prepared to allow easy extension. To make your new model, there are only three codes you need to focus on: the model, configuration, and train.py as shown in the following folders/files:
 ```text
-challenge_baseline/
+challenge_baseline2026/
 ├── src/
-│   ├── config/train_baseline.yaml  <- copy this and paste
-│   ├── models/WaveVoiceNet.py <- copy this and paste        
-│   ├── train.py        
+│   ├── config/train_baseline.yaml  <- copy this and paste in the same folder
+│   ├── models/WaveVoiceNet.py <- copy this and paste in the same folder       
+│   ├── train.py   <- change config parameter     
 │   ├── datamodule.py
 │   └── utils.py
 ├── baseline_docker_build.sh
@@ -95,7 +93,27 @@ challenge_baseline/
 └── README.md
 ```
 
-Then 
+Then, rename `models/WaveVoiceNet copy.py` file to `models/{NewModelName}.py` and within it the `class WaveVoiceNet(BaseModel)` at line 64 to `class {NewModelName}(BaseModel)` where `{NewModelName}` will be your new model name. Then, for `config/train_baseline copy.yaml`, change to `config/train_{NewModelName}`, and change the model parameter as follows:
+```yaml
+datamodule: 
+  length_sec: 4
+  batch_size: 8
+
+model: "{NewModelName}" #<-- change this
+model_params: 
+  learning_rate: 0.001 
+```
+Finally, in the ```train.py``` file change the following:
+```python
+# train.py around line 26
+OUTPUT_DIR = "/results/" 
+CONFIG_FILE = "/src/config/train_{NewModelName}" #<-- change this
+```
+
+With the above three, you will be able to start your own modelling.
+
+Thank you and enjoy your modelling!
+
 
 
 
