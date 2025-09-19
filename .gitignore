@@ -1,0 +1,5 @@
+dataset 
+*.pyc
+results
+*.ckpt
+*.csv
