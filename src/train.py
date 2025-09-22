@@ -24,7 +24,7 @@ current_directory = os.path.dirname(__file__)
 python_file_name = os.path.splitext(os.path.basename(__file__))[0]
 
 OUTPUT_DIR = "/results/" 
-CONFIG_FILE = "/src/config/train_baseline.yaml"
+CONFIG_FILE = "/src/config/train_QuazoModel.yaml"
 
 def _init_model(model_name, model_params):
     model_cls       = getattr(models, model_name)
