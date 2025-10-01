@@ -69,7 +69,7 @@ Note: Make sure that your command prompt is in root@<container_id>.
 
 Run the following command to train. Note that there are three phases, first with `fast development run` (fast_dev_run), second with `full training`  and finally with `full validation run`.
 ```bash
-bash train.py
+python train.py
 ```
 The rationale for the fast dev run phase is to facilitate quick fails (i.e., code issues, etc).  For now, you can terminate the training script (via `Ctrl+C`) after it has completed the fast development run phase and leverage it's saved file to test the submission portal.
 
